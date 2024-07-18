@@ -1,6 +1,9 @@
 package com.example.springsecurity.entities;
 
+import com.example.springsecurity.controllers.dto.LoginRequestDto;
 import jakarta.persistence.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 import java.util.UUID;
@@ -56,5 +59,9 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public boolean isLoginCorrect(LoginRequestDto loginRequestDto, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(loginRequestDto.password(), this.password);
     }
 }
